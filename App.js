@@ -1,21 +1,51 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, View } from 'react-native';
+import LottieView from 'lottie-react-native';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+export default class App extends React.Component {
+  componentDidMount() {
+    this.animation.play();
+    // Or set a specific startFrame and endFrame with:
+    // this.animation.play(30, 120);
+  }
+
+  resetAnimation = () => {
+    this.animation.reset();
+    this.animation.play();
+  };
+
+  render() {
+    return (
+      <View style={styles.animationContainer}>
+        <LottieView
+          ref={animation => {
+            this.animation = animation;
+          }}
+          style={{
+            width: 400,
+            height: 400,
+            backgroundColor: '#fff',
+          }}
+          source={require('./assets/34766-modern-technologies.json')}
+          // OR find more Lottie files @ https://lottiefiles.com/featured
+          // Just click the one you like, place that file in the 'assets' folder to the left, and replace the above 'require' statement
+        />
+        <View style={styles.buttonContainer}>
+          <Button title="Restart Animation" onPress={this.resetAnimation} />
+        </View>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  animationContainer: {
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    flex: 1,
+  },
+  buttonContainer: {
+    paddingTop: 20,
   },
 });
